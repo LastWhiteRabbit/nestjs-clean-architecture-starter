@@ -10,7 +10,7 @@ import { ApiResponseType } from '../../common/swagger/response.decorator';
 // import { AddTodoDto, UpdateTodoDto } from './todo.dto';
 import { AddProductDto } from './product.dto';
 // import { deleteTodoUseCases } from '../../../usecases/todo/deleteTodo.usecases';
-import { addProductUseCases } from 'src/useCases/addProduct.useCases';
+import { addProductUseCases } from 'src/useCases/product/addProduct.useCases';
 
 @Controller('product')
 @ApiTags('product')

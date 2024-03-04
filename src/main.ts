@@ -5,11 +5,14 @@ import { LoggerService } from './infrastructure/logger/logger.service';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseFormat, ResponseInterceptor } from './infrastructure/common/interceptors/response.interceptor';
 import { LoggingInterceptor } from './infrastructure/common/interceptors/logger.interceptor';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const env = process.env.NODE_ENV;
   const app = await NestFactory.create(AppModule);
 
+  app.use(cookieParser());
+  
   // Filter
   app.useGlobalFilters(new AllExceptionFilter(new LoggerService()));
 
