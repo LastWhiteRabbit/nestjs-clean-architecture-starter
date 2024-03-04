@@ -13,16 +13,8 @@ export class DatabaseUserRepository implements IUserService {
         private readonly userEntityRepository: Repository<User>,
     ) { }
     async registerUser(registerUser: UserRegisterModel): Promise<UserRegisterModel> {
-        const { username, password } = registerUser;
 
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        const user = new UserRegisterModel();
-        user.username = username;
-        user.password = hashedPassword;
-
-        return this.userEntityRepository.save(user);
+        return this.userEntityRepository.save(registerUser);
 
     }
     async updateRefreshToken(username: string, refreshToken: string): Promise<void> {

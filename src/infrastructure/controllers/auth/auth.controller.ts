@@ -15,6 +15,7 @@ import { IsAuthenticatedUseCases } from '../../../usecases/auth/isAuthenticated.
 import { LogoutUseCases } from '../../../usecases/auth/logout.usecases';
 
 import { ApiResponseType } from '../../common/swagger/response.decorator';
+import { RegisterUseCases } from 'src/useCases/auth/register.useCases';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -32,11 +33,20 @@ export class AuthController {
     private readonly logoutUsecaseProxy: UseCaseProxy<LogoutUseCases>,
     @Inject(UsecasesProxyModule.IS_AUTHENTICATED_USECASES_PROXY)
     private readonly isAuthUsecaseProxy: UseCaseProxy<IsAuthenticatedUseCases>,
+    @Inject(UsecasesProxyModule.REGISTER_USECASES_PROXY)
+    private readonly registerUsecaseProxy: UseCaseProxy<RegisterUseCases>,
   ) {}
+
+  @Post('register')
+  @ApiBody({ type: AuthLoginDto })
+  @ApiOperation({ description: 'register' })
+  async register(@Body() auth: AuthLoginDto) {
+    const registerResponse = this.registerUsecaseProxy.getInstance().registerUser(auth);
+    return registerResponse;
+  }
 
   @Post('login')
   @UseGuards(LoginGuard)
-  @ApiBearerAuth()
   @ApiBody({ type: AuthLoginDto })
   @ApiOperation({ description: 'login' })
   async login(@Body() auth: AuthLoginDto, @Request() request: any) {
