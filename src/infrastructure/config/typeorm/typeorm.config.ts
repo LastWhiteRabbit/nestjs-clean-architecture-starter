@@ -2,24 +2,24 @@ import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
 
 if (process.env.NODE_ENV === 'local') {
-    dotenv.config({ path: './env/local.env' });
+  dotenv.config({ path: './env/local.env' });
 }
 const config = new DataSource({
-    type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "docker",
-    database: "postgres",
-    schema: "public",
-    synchronize: false,
-    logging: true,
-    entities: [__dirname + './../../**/*.entity{.ts,.js}'],
-    migrationsTableName: 'migrations',
-    subscribers: [],
-    // migrations: ['migrations/**/*{.ts,.js}'],
-    migrations: ['database/migrations/**/*{.ts,.js}'],
-})
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'docker',
+  database: 'postgres',
+  schema: 'public',
+  synchronize: false,
+  logging: true,
+  entities: [__dirname + './../../**/*.entity{.ts,.js}'],
+  migrationsTableName: 'migrations',
+  subscribers: [],
+  // migrations: ['migrations/**/*{.ts,.js}'],
+  migrations: ['database/migrations/**/*{.ts,.js}'],
+});
 
 // const config = new DataSource({
 //   type: 'postgres',

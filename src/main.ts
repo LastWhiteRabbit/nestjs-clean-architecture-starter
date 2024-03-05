@@ -3,7 +3,10 @@ import { AppModule } from './app.module';
 import { AllExceptionFilter } from './infrastructure/common/filter/exception.filter';
 import { LoggerService } from './infrastructure/logger/logger.service';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ResponseFormat, ResponseInterceptor } from './infrastructure/common/interceptors/response.interceptor';
+import {
+  ResponseFormat,
+  ResponseInterceptor,
+} from './infrastructure/common/interceptors/response.interceptor';
 import { LoggingInterceptor } from './infrastructure/common/interceptors/logger.interceptor';
 import * as cookieParser from 'cookie-parser';
 
@@ -12,14 +15,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.use(cookieParser());
-  
+
   // Filter
   app.useGlobalFilters(new AllExceptionFilter(new LoggerService()));
 
   // interceptors
   app.useGlobalInterceptors(new LoggingInterceptor(new LoggerService()));
   app.useGlobalInterceptors(new ResponseInterceptor());
-
 
   // swagger config
   if (env !== 'production') {
@@ -36,8 +38,6 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document);
   }
 
-
   await app.listen(3000);
-
 }
 bootstrap();

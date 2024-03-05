@@ -1,5 +1,8 @@
 import { IBcryptService } from '../../domain/adapters/bcrypt.interface';
-import { IJwtService, IJwtServicePayload } from '../../domain/adapters/jwt.interface';
+import {
+  IJwtService,
+  IJwtServicePayload,
+} from '../../domain/adapters/jwt.interface';
 import { JWTConfig } from '../../domain/config/jwt.interface';
 import { ILogger } from '../../domain/logger/logger.interface';
 import { IUserService } from 'src/domain/interfaces/IUserService.interface';
@@ -14,7 +17,10 @@ export class LoginUseCases {
   ) {}
 
   async getCookieWithJwtToken(username: string) {
-    this.logger.log('LoginUseCases execute', `The user ${username} have been logged.`);
+    this.logger.log(
+      'LoginUseCases execute',
+      `The user ${username} have been logged.`,
+    );
     const payload: IJwtServicePayload = { username: username };
     const secret = this.jwtConfig.getJwtSecret();
     const expiresIn = this.jwtConfig.getJwtExpirationTime() + 's';
@@ -23,7 +29,10 @@ export class LoginUseCases {
   }
 
   async getCookieWithJwtRefreshToken(username: string) {
-    this.logger.log('LoginUseCases execute', `The user ${username} have been logged.`);
+    this.logger.log(
+      'LoginUseCases execute',
+      `The user ${username} have been logged.`,
+    );
     const payload: IJwtServicePayload = { username: username };
     const secret = this.jwtConfig.getJwtRefreshSecret();
     const expiresIn = this.jwtConfig.getJwtRefreshExpirationTime() + 's';
@@ -41,7 +50,7 @@ export class LoginUseCases {
     const match = await this.bcryptService.compare(pass, user.password);
     if (user && match) {
       await this.updateLoginTime(user.username);
-      const { password, ...result } = user;
+      const { ...result } = user;
       return result;
     }
     return null;
@@ -60,8 +69,12 @@ export class LoginUseCases {
   }
 
   async setCurrentRefreshToken(refreshToken: string, username: string) {
-    const currentHashedRefreshToken = await this.bcryptService.hash(refreshToken);
-    await this.userService.updateRefreshToken(username, currentHashedRefreshToken);
+    const currentHashedRefreshToken =
+      await this.bcryptService.hash(refreshToken);
+    await this.userService.updateRefreshToken(
+      username,
+      currentHashedRefreshToken,
+    );
   }
 
   async getUserIfRefreshTokenMatches(refreshToken: string, username: string) {
@@ -70,7 +83,10 @@ export class LoginUseCases {
       return null;
     }
 
-    const isRefreshTokenMatching = await this.bcryptService.compare(refreshToken, user.hashRefreshToken);
+    const isRefreshTokenMatching = await this.bcryptService.compare(
+      refreshToken,
+      user.hashRefreshToken,
+    );
     if (isRefreshTokenMatching) {
       return user;
     }

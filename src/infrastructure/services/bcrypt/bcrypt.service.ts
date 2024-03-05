@@ -5,11 +5,11 @@ import { IBcryptService } from '../../../domain/adapters/bcrypt.interface';
 @Injectable()
 export class BcryptService implements IBcryptService {
   rounds: number = 10;
-  
+
   async generateSalt(): Promise<string> {
     return await bcrypt.genSalt();
   }
-  
+
   async generateHashFromSalt(password: string, salt: string): Promise<string> {
     return bcrypt.hash(password, salt);
   }
