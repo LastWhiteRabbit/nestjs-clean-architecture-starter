@@ -6,7 +6,7 @@ export class IsAuthenticatedUseCases {
   async execute(username: string): Promise<UserWithoutPassword> {
     const user: UserModel =
       await this.adminUserRepo.getUserByUsername(username);
-    const { ...info } = user;
+    const { password, ...info } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
     return info;
   }
 }

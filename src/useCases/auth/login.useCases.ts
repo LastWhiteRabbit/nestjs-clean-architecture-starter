@@ -50,7 +50,7 @@ export class LoginUseCases {
     const match = await this.bcryptService.compare(pass, user.password);
     if (user && match) {
       await this.updateLoginTime(user.username);
-      const { ...result } = user;
+      const { password, ...result } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
       return result;
     }
     return null;

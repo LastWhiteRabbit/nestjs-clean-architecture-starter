@@ -1,5 +1,5 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { addProductUseCases } from 'src/useCases/product/addProduct.useCases';
+import { addProductUseCases } from '../../useCases/product/addProduct.useCases';
 // import { deleteTodoUseCases } from '../../usecases/todo/deleteTodo.usecases';
 // import { GetTodoUseCases } from '../../usecases/todo/getTodo.usecases';
 // import { getTodosUseCases } from '../../usecases/todo/getTodos.usecases';
@@ -24,7 +24,7 @@ import { DatabaseUserRepository } from '../repositories/user.repository';
 import { EnvironmentConfigModule } from '../config/environment-config/environment-config.module';
 import { EnvironmentConfigService } from '../config/environment-config/environment-config.service';
 import { UseCaseProxy } from './usecases-proxy';
-import { RegisterUseCases } from 'src/useCases/auth/register.useCases';
+import { RegisterUseCases } from '../../useCases/auth/register.useCases';
 
 @Module({
   imports: [
