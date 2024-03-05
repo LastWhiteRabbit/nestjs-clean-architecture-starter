@@ -1,7 +1,7 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UseCaseProxy } from 'src/infrastructure/usecases-proxy/usecases-proxy';
-import { UsecasesProxyModule } from 'src/infrastructure/usecases-proxy/usecases-proxy.module';
+import { UseCaseProxy } from '../../usecases-proxy/usecases-proxy';
+import { UsecasesProxyModule } from '../../usecases-proxy/usecases-proxy.module';
 // import { GetTodoUseCases } from '../../../usecases/todo/getTodo.usecases';
 import { ProductPresenter } from './product.presenter';
 import { ApiResponseType } from '../../common/swagger/response.decorator';

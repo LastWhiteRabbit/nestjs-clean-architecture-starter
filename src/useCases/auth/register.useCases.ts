@@ -1,7 +1,7 @@
-import { IBcryptService } from 'src/domain/adapters/bcrypt.interface';
-import { IUserService } from 'src/domain/interfaces/IUserService.interface';
-import { ILogger } from 'src/domain/logger/logger.interface';
-import { UserRegisterModel } from 'src/domain/model/user';
+import { IBcryptService } from '../../domain/adapters/bcrypt.interface';
+import { IUserService } from '../../domain/interfaces/IUserService.interface';
+import { ILogger } from '../../domain/logger/logger.interface';
+import { UserRegisterModel } from '../../domain/model/user';
 
 export class RegisterUseCases {
   constructor(
