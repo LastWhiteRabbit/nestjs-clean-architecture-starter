@@ -1,12 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsDate } from 'class-validator';
+import { IsNotEmpty, IsString, IsDate, IsNumber } from 'class-validator';
 
 export class AddProductDto {
-  @ApiProperty({ required: true })
-  @IsNotEmpty()
-  @IsString()
-  readonly id: number;
-
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
@@ -36,4 +31,29 @@ export class AddProductDto {
   @IsNotEmpty()
   @IsDate()
   readonly updatedDate: Date;
+}
+
+export class UpdateProductDto {
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  @IsNumber()
+  readonly id: number;
+
+  @ApiProperty({ required: false })
+  @IsNotEmpty()
+  @IsString()
+  readonly name: string;
+
+  @ApiProperty({ required: false })
+  @IsNotEmpty()
+  @IsString()
+  readonly shortName: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  readonly description: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  readonly shortDescription: string;
 }

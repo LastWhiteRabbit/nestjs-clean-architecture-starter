@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ProductModel } from '../../domain/model/product.model';
+import {
+  ProductModel,
+  ProductUpdateModel,
+} from '../../domain/model/product.model';
 import { IProductService } from '../../domain/interfaces/IProductService.interface';
 import { Product } from '../entities/product.entity';
 
@@ -12,12 +15,17 @@ export class DatabaseProductRepository implements IProductService {
     private readonly productEntityRepository: Repository<Product>,
   ) {}
 
-  async updateContent(id: number): Promise<void> {
+  async updateContent(id: ProductUpdateModel): Promise<void> {
     await this.productEntityRepository.update(
       {
-        id: id,
+        id: id.id,
       },
-      {}, // Add an empty object as the second argument
+      {
+        name: id.name,
+        shortName: id.shortName,
+        description: id.description,
+        shortDescription: id.shortDescription,
+      }, // Add an empty object as the second argument
     );
   }
   async insert(product: ProductModel): Promise<ProductModel> {
