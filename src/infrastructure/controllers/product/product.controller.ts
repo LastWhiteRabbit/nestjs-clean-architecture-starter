@@ -1,16 +1,25 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UseCaseProxy } from '../../usecases-proxy/usecases-proxy';
 import { UsecasesProxyModule } from '../../usecases-proxy/usecases-proxy.module';
-// import { GetTodoUseCases } from '../../../usecases/todo/getTodo.usecases';
+import { getProductUseCases } from '../../../usecases/product/getproduct.usecases';
 import { ProductPresenter } from './product.presenter';
 import { ApiResponseType } from '../../common/swagger/response.decorator';
-// import { getTodosUseCases } from '../../../usecases/todo/getTodos.usecases';
-// import { updateTodoUseCases } from '../../../usecases/todo/updateTodo.usecases';
-// import { AddTodoDto, UpdateTodoDto } from './todo.dto';
-import { AddProductDto } from './product.dto';
-// import { deleteTodoUseCases } from '../../../usecases/todo/deleteTodo.usecases';
-import { addProductUseCases } from 'src/useCases/product/addProduct.useCases';
+import { getProductsUseCases } from '../../../usecases/product/getProducts.usecases';
+import { updateProductUseCases } from '../../../usecases/product/updateProduct.useCases';
+import { AddProductDto, UpdateProductDto } from './product.dto';
+import { deleteProductUseCases } from '../../../usecases/product/deleteProduct.usecases';
+import { addProductUseCases } from '../../../useCases/product/addProduct.useCases';
 
 @Controller('product')
 @ApiTags('product')
@@ -18,46 +27,49 @@ import { addProductUseCases } from 'src/useCases/product/addProduct.useCases';
 @ApiExtraModels(ProductPresenter)
 export class ProductController {
   constructor(
-    // @Inject(UsecasesProxyModule.GET_PRODUCT_USECASES_PROXY)
-    // private readonly getProductUsecaseProxy: UseCaseProxy<GetProductUseCases>,
-    // @Inject(UsecasesProxyModule.GET_PRODUCTS_USECASES_PROXY)
-    // private readonly getAllProductUsecaseProxy: UseCaseProxy<getProductsUseCases>,
-    // @Inject(UsecasesProxyModule.PUT_PRODUCT_USECASES_PROXY)
-    // private readonly updateProductUsecaseProxy: UseCaseProxy<updateProductUseCases>,
-    // @Inject(UsecasesProxyModule.DELETE_PRODUCT_USECASES_PROXY)
-    // private readonly deleteProductUsecaseProxy: UseCaseProxy<deleteProductUseCases>,
+    @Inject(UsecasesProxyModule.GET_PRODUCT_USECASES_PROXY)
+    private readonly getProductUsecaseProxy: UseCaseProxy<getProductUseCases>,
+    @Inject(UsecasesProxyModule.GET_PRODUCTS_USECASES_PROXY)
+    private readonly getAllProductUsecaseProxy: UseCaseProxy<getProductsUseCases>,
+    @Inject(UsecasesProxyModule.PUT_PRODUCT_USECASES_PROXY)
+    private readonly updateProductUsecaseProxy: UseCaseProxy<updateProductUseCases>,
+    @Inject(UsecasesProxyModule.DELETE_PRODUCT_USECASES_PROXY)
+    private readonly deleteProductUsecaseProxy: UseCaseProxy<deleteProductUseCases>,
     @Inject(UsecasesProxyModule.POST_PRODUCT_USECASES_PROXY)
     private readonly addProductUsecaseProxy: UseCaseProxy<addProductUseCases>,
   ) {}
 
-  //   @Get('todo')
-  //   @ApiResponseType(ProductPresenter, false)
-  //   async getTodo(@Query('id', ParseIntPipe) id: number) {
-  //     const todo = await this.getTodoUsecaseProxy.getInstance().execute(id);
-  //     return new ProductPresenter(todo);
-  //   }
+  @Get('product')
+  @ApiResponseType(ProductPresenter, false)
+  async getProduct(@Query('id', ParseIntPipe) id: number) {
+    const product = await this.getProductUsecaseProxy.getInstance().execute(id);
+    return new ProductPresenter(product);
+  }
 
-  //   @Get('todos')
-  //   @ApiResponseType(ProductPresenter, true)
-  //   async getTodos() {
-  //     const todos = await this.getAllTodoUsecaseProxy.getInstance().execute();
-  //     return todos.map((todo) => new ProductPresenter(todo));
-  //   }
+  @Get('products')
+  @ApiResponseType(ProductPresenter, true)
+  async getProducts() {
+    const products = await this.getAllProductUsecaseProxy
+      .getInstance()
+      .execute();
+    return products.map((product) => new ProductPresenter(product));
+  }
 
-  //   @Put('todo')
-  //   @ApiResponseType(ProductPresenter, true)
-  //   async updateTodo(@Body() updateTodoDto: UpdateTodoDto) {
-  //     const { id, isDone } = updateTodoDto;
-  //     await this.updateTodoUsecaseProxy.getInstance().execute(id, isDone);
-  //     return 'success';
-  //   }
+  @Put('product')
+  @ApiResponseType(ProductPresenter, true)
+  async updateProduct(@Body() updateProductDto: UpdateProductDto) {
+    await this.updateProductUsecaseProxy
+      .getInstance()
+      .execute(updateProductDto);
+    return 'success';
+  }
 
-  //   @Delete('todo')
-  //   @ApiResponseType(ProductPresenter, true)
-  //   async deleteTodo(@Query('id', ParseIntPipe) id: number) {
-  //     await this.deleteTodoUsecaseProxy.getInstance().execute(id);
-  //     return 'success';
-  //   }
+  @Delete('product')
+  @ApiResponseType(ProductPresenter, true)
+  async deleteProduct(@Query('id', ParseIntPipe) id: number) {
+    await this.deleteProductUsecaseProxy.getInstance().execute(id);
+    return 'success';
+  }
 
   @Post('product')
   @ApiResponseType(ProductPresenter, true)

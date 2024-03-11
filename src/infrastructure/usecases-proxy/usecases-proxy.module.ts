@@ -1,9 +1,9 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { addProductUseCases } from '../../useCases/product/addProduct.useCases';
-// import { deleteTodoUseCases } from '../../usecases/todo/deleteTodo.usecases';
-// import { GetTodoUseCases } from '../../usecases/todo/getTodo.usecases';
-// import { getTodosUseCases } from '../../usecases/todo/getTodos.usecases';
-// import { updateTodoUseCases } from '../../usecases/todo/updateTodo.usecases';
+import { deleteProductUseCases } from '../../usecases/product/deleteProduct.usecases';
+import { getProductUseCases } from '../../usecases/product/getProduct.usecases';
+import { getProductsUseCases } from '../../usecases/product/getProducts.usecases';
+import { updateProductUseCases } from '../../usecases/product/updateProduct.usecases';
 import { IsAuthenticatedUseCases } from '../../usecases/auth/isAuthenticated.usecases';
 import { LoginUseCases } from '../../usecases/auth/login.usecases';
 import { LogoutUseCases } from '../../usecases/auth/logout.usecases';
@@ -103,43 +103,54 @@ export class UsecasesProxyModule {
               new RegisterUseCases(logger, userRepo, bcryptService),
             ),
         },
-        // {
-        //   inject: [DatabaseProductRepository],
-        //   provide: UsecasesProxyModule.GET_PRODUCT_USECASES_PROXY,
-        //   useFactory: (todoRepository: DatabaseProductRepository) => new UseCaseProxy(new GetTodoUseCases(todoRepository)),
-        // },
-        // {
-        //   inject: [DatabaseProductRepository],
-        //   provide: UsecasesProxyModule.GET_PRODUCTS_USECASES_PROXY,
-        //   useFactory: (todoRepository: DatabaseProductRepository) => new UseCaseProxy(new getTodosUseCases(todoRepository)),
-        // },
+        {
+          inject: [DatabaseProductRepository],
+          provide: UsecasesProxyModule.GET_PRODUCT_USECASES_PROXY,
+          useFactory: (productService: DatabaseProductRepository) =>
+            new UseCaseProxy(new getProductUseCases(productService)),
+        },
+        {
+          inject: [LoggerService, DatabaseProductRepository],
+          provide: UsecasesProxyModule.GET_PRODUCTS_USECASES_PROXY,
+          useFactory: (
+            logger: LoggerService,
+            productService: DatabaseProductRepository,
+          ) =>
+            new UseCaseProxy(new getProductsUseCases(logger, productService)),
+        },
         {
           inject: [LoggerService, DatabaseProductRepository],
           provide: UsecasesProxyModule.POST_PRODUCT_USECASES_PROXY,
           useFactory: (
             logger: LoggerService,
-            todoRepository: DatabaseProductRepository,
-          ) => new UseCaseProxy(new addProductUseCases(logger, todoRepository)),
+            productService: DatabaseProductRepository,
+          ) => new UseCaseProxy(new addProductUseCases(logger, productService)),
         },
-        // {
-        //   inject: [LoggerService, DatabaseProductRepository],
-        //   provide: UsecasesProxyModule.PUT_PRODUCT_USECASES_PROXY,
-        //   useFactory: (logger: LoggerService, todoRepository: DatabaseProductRepository) =>
-        //     new UseCaseProxy(new updateTodoUseCases(logger, todoRepository)),
-        // },
-        // {
-        //   inject: [LoggerService, DatabaseProductRepository],
-        //   provide: UsecasesProxyModule.DELETE_PRODUCT_USECASES_PROXY,
-        //   useFactory: (logger: LoggerService, todoRepository: DatabaseProductRepository) =>
-        //     new UseCaseProxy(new deleteTodoUseCases(logger, todoRepository)),
-        // },
+        {
+          inject: [LoggerService, DatabaseProductRepository],
+          provide: UsecasesProxyModule.PUT_PRODUCT_USECASES_PROXY,
+          useFactory: (
+            logger: LoggerService,
+            productService: DatabaseProductRepository,
+          ) =>
+            new UseCaseProxy(new updateProductUseCases(logger, productService)),
+        },
+        {
+          inject: [LoggerService, DatabaseProductRepository],
+          provide: UsecasesProxyModule.DELETE_PRODUCT_USECASES_PROXY,
+          useFactory: (
+            logger: LoggerService,
+            productService: DatabaseProductRepository,
+          ) =>
+            new UseCaseProxy(new deleteProductUseCases(logger, productService)),
+        },
       ],
       exports: [
-        // UsecasesProxyModule.GET_PRODUCT_USECASES_PROXY,
-        // UsecasesProxyModule.GET_PRODUCTS_USECASES_PROXY,
+        UsecasesProxyModule.GET_PRODUCT_USECASES_PROXY,
+        UsecasesProxyModule.GET_PRODUCTS_USECASES_PROXY,
         UsecasesProxyModule.POST_PRODUCT_USECASES_PROXY,
-        // UsecasesProxyModule.PUT_PRODUCT_USECASES_PROXY,
-        // UsecasesProxyModule.DELETE_PRODUCT_USECASES_PROXY,
+        UsecasesProxyModule.PUT_PRODUCT_USECASES_PROXY,
+        UsecasesProxyModule.DELETE_PRODUCT_USECASES_PROXY,
         UsecasesProxyModule.LOGIN_USECASES_PROXY,
         UsecasesProxyModule.IS_AUTHENTICATED_USECASES_PROXY,
         UsecasesProxyModule.LOGOUT_USECASES_PROXY,
