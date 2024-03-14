@@ -22,14 +22,32 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+# Clean Architecture Starter (NestJS + TypeORM + Typescript + Jest) 
+
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a Back End [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository. It comes with the following features.
+- ✅ Clean architecture
+- ✅ NestJS
+- ✅ Env Configuration
+- ✅ TypeORM
+- ✅ Exception Filter
+- ✅ Logger
+- ✅ Swagger
+- ✅ Testing using Jest 
+- ✅ Postgres Database 
+- ✅ Seeds 
 
 ## Installation
 
 ```bash
 $ npm install
+```
+
+## Docker
+```bash
+# Create a docker image 
+docker run -d --name clean-architecture -p 5432:5432 -e POSTGRES_PASSWORD=docker postgres
 ```
 
 ## Running the app
