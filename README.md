@@ -53,6 +53,9 @@ $ npm run migration:generate --name=CREATE_PRODUCT
 # run migration
 $ npm run migration:run
 
+# run seed
+$ npm run seed:run
+
 ```
 ## Test
 

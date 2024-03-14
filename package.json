@@ -25,7 +25,9 @@
     "migration:revert": "NODE_ENV=local npm run typeorm -- -d src/infrastructure/config/typeorm/typeorm.config.ts migration:revert",
     "migration:show": "NODE_ENV=local npm run typeorm -- migration:show -d src/infrastructure/config/typeorm/typeorm.config.ts",
     "prepare": "husky",
-    "eslint:lint": "eslint --fix ."
+    "eslint:lint": "eslint --fix .",
+    "seed:run": "NODE_ENV=local ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d src/infrastructure/config/typeorm/typeorm.config.ts",
+    "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create --name src/infrastructure/database/seeds/user.seeder.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -45,7 +47,8 @@
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm-extension": "^3.5.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
