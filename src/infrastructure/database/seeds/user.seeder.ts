@@ -3,9 +3,7 @@ import { DataSource } from 'typeorm';
 import { User } from '../../entities/user.entity';
 
 export default class UserSeeder implements Seeder {
-  public async run(
-    dataSource: DataSource,
-  ): Promise<void> {
+  public async run(dataSource: DataSource): Promise<void> {
     await dataSource.query('TRUNCATE "user" RESTART IDENTITY;');
 
     const repository = dataSource.getRepository(User);
