@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
 
 if (process.env.NODE_ENV === 'local') {
-  dotenv.config({ path: './env/local.env'  });
+  dotenv.config({ path: './env/local.env' });
 }
 
 const config = new DataSource({
