@@ -32,6 +32,8 @@ This is a Back End [Nest](https://github.com/nestjs/nest) framework TypeScript s
 - ✅ Env Configuration
 - ✅ TypeORM
 - ✅ Exception Filter
+- ✅ Husky Hooks
+- ✅ ESLint + Prettier
 - ✅ Logger
 - ✅ Swagger
 - ✅ Testing using Jest 
